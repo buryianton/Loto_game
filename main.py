@@ -2,37 +2,56 @@ import random
 import numpy as np
 from objects import Barrels, Ticket
 
-numbers = list(range(1, 91))
-random.shuffle(numbers)
 
-print('Example: ', numbers)
 
+#создаем мешок с бочонками
 barrel = Barrels()
 our_numbers = barrel.show_numbers()
-print(type(our_numbers))
-print("Создали список: ", our_numbers)
-
-for i in range(2):
-    i = barrel.take_number()
-    our_numbers = barrel.show_numbers()
-    print('Вытащили бочонок: ', i)
-    print('Новый список: ', our_numbers)
-
-t = np.random.randint(1, 90, 15)
-print(t)
-
-total_indices = [(i,j) for i in range(3) for j in range(9)]
-print(total_indices)
-
-first_row = random.sample(total_indices[:9],5)
-second_row = random.sample(total_indices[9:18], 5)
-third_row = random.sample(total_indices[-9:], 5)
-
-print(first_row)
-print(second_row)
-print(third_row)
 
 my_ticket = Ticket()
+opponent_ticket = Ticket()
 
-print('Карточка: ')
-print(my_ticket.show())
+print('Моя карточка: ')
+print(my_ticket.show(),'\n')
+print('Карточка опонента: ')
+print(opponent_ticket.show(),'\n')
+
+
+def play_round(number):
+    num = number
+    print('Вытащили бочонок c номером ', num)
+
+    print('Ваша карточка: ')
+    print(my_ticket.show(), '\n')
+
+    answer = input('Зачеркнуть это число на вашей карточке? \n'
+                   'Введите 1 или 2 \n'
+                   '1. Зачеркнуть \n'
+                   '2. Не зачеркивать \n')
+    if answer == 1:
+        if number in my_ticket:
+            print('Есть')
+    elif answer == 2:
+        pass
+
+
+my_numbers = []
+opponent_numbers = []
+
+for i in range(2):
+    number = barrel.take_number()
+    print('Наш бочонок с номером - ', number)
+    print('МОЯ КАРТОЧКА: ')
+    #my_ticket.play(number)
+    play_round(number)
+    print('КАРТОЧКА ОПОНЕНТА:')
+    opponent_ticket.play(number)
+
+
+print(my_numbers)
+
+#print('Мои числа, вычеркнутые из карточки: ', my_numbers)
+#print('Числа, вычеркнутые из карточки опонента: ', opponent_numbers)
+
+
+

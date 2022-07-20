@@ -1,6 +1,7 @@
 import random
 import numpy as np
 
+
 class Barrels:
 
     def __init__(self):
@@ -43,8 +44,43 @@ class Ticket:
             self.ticket_array[num] = numbers[0]
             numbers = numbers[1:]
 
+        for col in range(9):
+            if (self.ticket_array[0][col] != 0 and self.ticket_array[1][col] != 0 and self.ticket_array[2][col] != 0):
+                for row in range(2):
+                    if self.ticket_array[row][col] > self.ticket_array[row+1][col]:
+                        temp = self.ticket_array[row][col]
+                        self.ticket_array[row][col] = self.ticket_array[row+1][col]
+                        self.ticket_array[row+1][col] = temp
+
+                    elif (self.ticket_array[0][col] != 0 and self.ticket_array[1][col] != 0 and self.ticket_array[2][col] == 0):
+                        if self.ticket_array[0][col] > self.ticket_array[1][col]:
+                            temp = self.ticket_array[0][col]
+                            self.ticket_array[0][col] = self.ticket_array[1][col]
+                            self.ticket_array[1][col] = temp
+
+                    elif (self.ticket_array[0][col] != 0 and self.ticket_array[2][col] != 0 and self.ticket_array[1][col] == 0):
+                        if self.ticket_array[0][col] > self.ticket_array[2][col]:
+                            temp = self.ticket_array[0][col]
+                            self.ticket_array[0][col] = self.ticket_array[2][col]
+                            self.ticket_array[2][col] = temp
+
+                    elif (self.ticket_array[0][col] == 0 and self.ticket_array[1][col] != 0 and self.ticket_array[2][col] != 0):
+                        if self.ticket_array[1][col] > self.ticket_array[2][col]:
+                            temp = self.ticket_array[1][col]
+                            self.ticket_array[1][col] = self.ticket_array[2][col]
+                            self.ticket_array[2][col] = temp
+
     def show(self):
         return self.ticket_array
 
+    def play(self, number):
+        numbers = []
+        for col in range(9):
+            for row in range(2):
+                if number == self.ticket_array[row][col]:
+                    print('В карточке есть число - ', number)
+                    self.ticket_array[row][col] = 0
+                    numbers.append(number)
 
-
+        print(self.ticket_array)
+        return numbers
